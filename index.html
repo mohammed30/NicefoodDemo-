@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nice Food — تسجيل الوجبة</title>
+<link rel="icon" href="logo.png" type="image/png">
+<style>
+:root{--green:#184f3d;--lime:#d7ed9b;--ink:#203c32;--muted:#738078;--border:#e1e6dd}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f6f5ef;color:var(--ink);line-height:1.8}
+button,input{font:inherit}button{cursor:pointer}header{padding:22px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:#fff}
+.brand{display:flex;align-items:center;gap:12px}.brand strong{font-size:23px;letter-spacing:-1px;display:block;line-height:1.2}.brand small{color:var(--muted);font-size:11px}
+.logo{width:58px;height:58px;object-fit:contain;border-radius:12px}.wordmark{width:48px;height:48px;border-radius:50%;background:var(--green);color:var(--lime);display:grid;place-items:center;font:italic bold 26px Georgia}
+.tag{font-size:11px;border:1px solid var(--border);border-radius:30px;padding:5px 12px;color:var(--muted)}
+main{max-width:480px;margin:34px auto;padding:0 20px}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--green);font-weight:bold}
+h1{font-size:30px;margin:7px 0 10px;line-height:1.5}p{color:var(--muted);font-size:14px;margin:0 0 23px}
+.steps{display:flex;gap:9px;margin-bottom:24px}.step{flex:1;border-top:3px solid var(--border);padding-top:8px;font-size:11px;color:var(--muted)}.step.active{border-color:var(--green);color:var(--green)}
+.card{background:white;border:1px solid var(--border);border-radius:24px;padding:25px;box-shadow:0 12px 35px #203c3207}
+label{font-size:13px;font-weight:bold;display:block;margin-bottom:8px}input{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:#fafbf8;color:var(--ink);outline:none}
+input:focus{border-color:var(--green);box-shadow:0 0 0 3px #184f3d0c}.field{margin-bottom:20px}
+.primary,.secondary{width:100%;border-radius:13px;padding:13px;border:0;font-weight:bold}.primary{background:var(--green);color:#fff}.secondary{background:#edf2e7;color:var(--green);border:1px solid #dfe8d5}
+button:disabled{opacity:.5;cursor:wait}.divider{display:flex;align-items:center;gap:12px;color:#8d978e;font-size:11px;margin:17px 0}.divider:before,.divider:after{content:"";height:1px;background:var(--border);flex:1}
+.hint{font-size:11px;color:var(--muted);margin:8px 0 0}.code-row{display:flex;gap:8px}.code-input{display:flex;align-items:center;flex:1;min-width:0;direction:ltr;border:1px solid var(--border);border-radius:12px;background:#fafbf8;overflow:hidden}.code-input:focus-within{border-color:var(--green);box-shadow:0 0 0 3px #184f3d0c}.code-prefix{padding:12px 10px 12px 14px;color:var(--green);font-weight:bold;background:#edf2e7;border-right:1px solid var(--border);user-select:none}.code-input input{min-width:0;direction:ltr;text-align:left;border:0;border-radius:0;background:transparent;box-shadow:none}.code-row button{width:auto;white-space:nowrap;padding:10px 15px}
+.notice{padding:13px;border-radius:12px;font-size:13px;background:#f2f5e9;margin-bottom:16px}.error{background:#fff1ed;color:#9d392d}.success-icon{margin:12px auto 20px;width:75px;height:75px;border-radius:50%;background:var(--lime);display:grid;place-items:center;font-size:35px}
+.center{text-align:center}.center h2{font-size:23px}.meal{border:1px dashed #bacab2;border-radius:12px;padding:12px;margin:18px 0;display:flex;justify-content:space-between;font-size:13px}
+footer{text-align:center;font-size:11px;color:var(--muted);margin:25px 0}.text-btn{border:0;background:none;color:var(--green);font-size:11px;text-decoration:underline;padding:8px}
+video{width:100%;border-radius:14px;background:#18231e;max-height:280px;object-fit:cover;margin:12px 0}
+.rating{display:flex;gap:7px;margin:10px 0 22px}.rating button{flex:1;border:1px solid var(--border);border-radius:10px;background:#f7f8f3;padding:11px 0;color:var(--green)}.rating button.selected{background:var(--green);color:white}
+[hidden]{display:none!important}.demo{background:#eaf0dd;color:#526340;font-size:11px;padding:9px 16px;text-align:center}
+@media(min-width:760px){header{padding-inline:calc((100% - 850px)/2)}main{margin-top:45px}}
+</style>
+</head>
+<body>
+<div class="demo">نموذج تجريبي • الحفظ على هذا المتصفح فقط • استخدم بيانات وهمية</div>
+<header>
+<div class="brand">
+<div id="wordmark" class="wordmark" hidden>N</div>
+<img id="logo" class="logo" src="logo.png" alt="شعار Nice Food" onerror="this.hidden=true;document.getElementById('wordmark').hidden=false">
+<div><strong dir="ltr">Nice Food</strong><small>تجربة تستحق رأيك</small></div>
+</div>
+<span class="tag">بالهنا والشفا</span>
+</header>
+<main>
+<div class="eyebrow">YOUR MEAL · YOUR EXPERIENCE</div>
+<h1>وجبتك أحلى<br>لما نسمع رأيك.</h1>
+<p>سجّل وجبتك وشاركنا تجربتك بخطوات بسيطة.</p>
+<div class="steps"><div class="step active" id="s1">01 · كود الوجبة</div><div class="step" id="s2">02 · بياناتك</div></div>
+<div class="card">
+<div id="message" role="status" aria-live="polite" hidden></div>
+<section id="scan">
+<label>كود الوجبة</label>
+<button class="secondary" id="camera" type="button">▣ &nbsp; مسح QR بالكاميرا</button>
+<div id="cameraArea" hidden><video id="video" autoplay muted playsinline></video><button class="text-btn" id="stop" type="button">إغلاق الكاميرا</button></div>
+<div class="divider">أو أدخل الكود يدويًا</div>
+<form id="codeForm">
+<div class="code-row"><div class="code-input"><span class="code-prefix">NF-</span><input id="code" aria-label="كود الوجبة" placeholder="1001" autocomplete="off" required></div><button class="primary" type="submit">متابعة ←</button></div>
+</form>
+<p class="hint">أكواد التجربة: 1001 أو 1002 أو 1003</p>
+<p class="hint">فتح الكود وحده لا يعتبر استخدامًا.</p>
+</section>
+<section id="register" hidden>
+<div class="notice">تم التعرف على كود الوجبة ✓</div>
+<div class="meal"><span>كود وجبتك</span><strong id="mealCode" dir="ltr"></strong></div>
+<form id="registration">
+<div class="field"><label for="name">الاسم</label><input id="name" placeholder="اكتب اسمك" autocomplete="name" maxlength="100" required></div>
+<div class="field"><label for="phone">رقم الموبايل</label><input id="phone" type="tel" inputmode="tel" dir="ltr" placeholder="01xxxxxxxxx" autocomplete="tel" required></div>
+<p class="hint" style="margin-bottom:18px">بالضغط على حفظ، يتم تسجيل بياناتك وربطها بهذا الكود. لن يمكن استخدام الكود للتسجيل مرة أخرى.</p>
+<button class="primary" type="submit">حفظ</button>
+</form>
+<button class="text-btn back" type="button">العودة للكود</button>
+</section>
+<section id="done" class="center" hidden>
+<div class="success-icon">✓</div><h2>تم حفظ بياناتك بنجاح!</h2><p>تم تسجيل بياناتك واستخدام كود الوجبة بنجاح.</p>
+<button class="secondary back" type="button">تجربة كود آخر</button>
+</section>
+<section id="used" class="center" hidden>
+<div class="success-icon" style="background:#f7e7d5">!</div><h2>تم استخدام هذا الباركود سابقًا</h2><p>هذا الكود مسجّل بالفعل، ولا يمكن تسجيل بيانات جديدة عليه.</p>
+<button class="secondary back" type="button">العودة</button>
+</section>
+</div>
+<footer>
+<div>Nice Food · نموذج تسجيل وتقييم الوجبات</div>
+</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const KEY='nicefood-demo-v1';
+const allowed=new Set(['NF-1001','NF-1002','NF-1003']);
+let current='',stream=null,scanning=false;
+function getDB(){return JSON.parse(localStorage.getItem(KEY)||'{}')}
+function saveDB(db){localStorage.setItem(KEY,JSON.stringify(db))}
+function msg(t,error=true){$('message').textContent=t;$('message').className='notice'+(error?' error':'');$('message').hidden=false}
+function stopCamera(){scanning=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('video').srcObject=null;$('cameraArea').hidden=true;$('camera').disabled=false}
+function screen(id){
+stopCamera();$('message').hidden=true;
+['scan','register','done','used'].forEach(s=>$(s).hidden=s!==id);
+$('s1').classList.toggle('active',id==='scan');
+$('s2').classList.toggle('active',id==='register'||id==='done');
+}
+function parseCode(raw){
+let value=raw.replace(/[٠-٩]/g,d=>String('٠١٢٣٤٥٦٧٨٩'.indexOf(d))).replace(/[۰-۹]/g,d=>String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d))).trim();
+try{const url=new URL(value);value=url.searchParams.get('code')||url.searchParams.get('token')||url.pathname.split('/').filter(Boolean).pop()||''}catch{}
+value=value.trim().toUpperCase().replace(/^NF[-\s]*/,'');
+return value?'NF-'+value:'';
+}
+function openCode(raw){
+const c=parseCode(raw);
+if(!allowed.has(c)){msg('كود غير معروف. جرّب 1001 أو 1002 أو 1003.');return}
+try{
+current=c;
+if(getDB()[c]){screen('used');return}
+$('mealCode').textContent=c;$('registration').reset();screen('register');
+}catch{msg('الحفظ المحلي غير متاح. اسمح بتخزين بيانات الموقع أو افتح النموذج في متصفح مستقل.')}
+}
+$('codeForm').onsubmit=e=>{e.preventDefault();openCode($('code').value)};
+$('registration').onsubmit=e=>{
+e.preventDefault();
+const name=$('name').value.trim();
+const digits=$('phone').value.replace(/[٠-٩]/g,d=>String('٠١٢٣٤٥٦٧٨٩'.indexOf(d))).replace(/[۰-۹]/g,d=>String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d))).replace(/[\s()-]/g,'');
+if(name.length<2){msg('اكتب اسمًا من حرفين على الأقل.');return}
+if(!/^(?:01[0125]\d{8}|\+201[0125]\d{8})$/.test(digits)){msg('أدخل رقم موبايل مصري صحيح مثل 01012345678.');return}
+try{
+const db=getDB();if(db[current]){screen('used');return}
+db[current]={name,phone:digits,isUsed:true,usedAt:new Date().toISOString()};
+saveDB(db);screen('done');
+}catch{msg('تعذر حفظ البيانات. تحقق من السماح بالتخزين المحلي.')}
+};
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>{current='';$('code').value='';screen('scan')});
+$('stop').onclick=stopCamera;
+$('camera').onclick=async()=>{
+$('message').hidden=true;
+if(!navigator.mediaDevices?.getUserMedia){msg('الكاميرا غير متاحة هنا. استخدم الإدخال اليدوي، أو افتح النموذج عبر HTTPS.');return}
+if(!('BarcodeDetector' in window)){msg('هذا المتصفح لا يدعم قارئ QR المستخدم في الديمو. استخدم الإدخال اليدوي.');return}
+$('camera').disabled=true;
+try{
+const formats=await BarcodeDetector.getSupportedFormats();
+if(!formats.includes('qr_code'))throw Error('unsupported');
+stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+$('video').srcObject=stream;$('cameraArea').hidden=false;await $('video').play();
+const detector=new BarcodeDetector({formats:['qr_code']});scanning=true;
+async function tick(){
+if(!scanning)return;
+try{
+const results=await detector.detect($('video'));
+if(!scanning)return;
+if(results.length){const value=results[0].rawValue;stopCamera();$('code').value=value.replace(/^NF[-\s]*/i,'');openCode(value);return}
+}catch{stopCamera();msg('تعذرت قراءة الصورة. استخدم إدخال الكود يدويًا.');return}
+if(scanning)setTimeout(tick,250);
+}
+tick();
+}catch{stopCamera();msg('تعذر تشغيل قارئ QR. تحقق من إذن الكاميرا، أو استخدم الكود اليدوي.')}
+};
+window.addEventListener('pagehide',stopCamera);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopCamera()});
+</script>
+</body>
+</html>
